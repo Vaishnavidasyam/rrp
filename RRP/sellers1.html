@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Submitted Properties</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body class="p-5">
+    <div class="container">
+      <h2 class="mb-4">Your Submitted Properties</h2>
+      <div id="propertyList" class="row g-4"></div>
+      <button id="saveChanges" class="btn btn-success mt-4">
+        Save Changes
+      </button>
+    </div>
+
+    <script>
+      let properties = JSON.parse(
+        localStorage.getItem("submittedProperties") || "[]"
+      );
+
+      const renderProperties = () => {
+        const list = document.getElementById("propertyList");
+        list.innerHTML = "";
+        properties.forEach((prop, index) => {
+          const card = document.createElement("div");
+          card.className = "col-md-4";
+          card.innerHTML = `
+            <div class="card">
+              <img src="${
+                prop.image
+              }" class="card-img-top" alt="Property Image" />
+              <div class="card-body">
+                <h5 class="card-title">${prop.title || prop.type}</h5>
+                <p class="card-text"><strong>Price:</strong> ${prop.price}</p>
+                <p><strong>Location:</strong> ${prop.city}, ${prop.state}</p>
+                <button class="btn btn-danger btn-sm" onclick="deleteProperty(${index})">Delete</button>
+              </div>
+            </div>
+          `;
+          list.appendChild(card);
+        });
+      };
+
+      const deleteProperty = (index) => {
+        properties.splice(index, 1);
+        localStorage.setItem("submittedProperties", JSON.stringify(properties));
+        renderProperties();
+      };
+
+      document
+        .getElementById("saveChanges")
+        .addEventListener("click", async () => {
+          try {
+            const response = await fetch("save_to_display.php", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(properties),
+            });
+
+            const result = await response.json();
+            if (result.success) {
+              alert("Properties saved to database!");
+            } else {
+              alert("Failed to save: " + result.message);
+            }
+          } catch (err) {
+            console.error("Save failed", err);
+            alert("An error occurred while saving.");
+          }
+        });
+
+      renderProperties();
+    </script>
+  </body>
+</html>
