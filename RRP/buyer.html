@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Available Properties</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    />
+  </head>
+  <body class="p-4">
+    <div class="container">
+      <h2 class="mb-4">Available Properties</h2>
+      <div id="property-list" class="row g-4"></div>
+    </div>
+
+    <script>
+      fetch("fetch_properties.php")
+        .then((response) => response.json())
+        .then((data) => {
+          const container = document.getElementById("property-list");
+          if (data.length === 0) {
+            container.innerHTML = "<p>No properties available.</p>";
+            return;
+          }
+
+          data.forEach((property) => {
+            const card = document.createElement("div");
+            card.className = "col-md-4";
+
+            card.innerHTML = `
+  <a href="property_details.php?id=${
+    property.id
+  }" style="text-decoration: none; color: inherit;">
+    <div class="card h-100 shadow-sm">
+        ${
+          property.image
+            ? `<img src="${property.image}" class="card-img-top" style="height: 200px; object-fit: cover;">`
+            : ""
+        }
+        <div class="card-body">
+            <h5 class="card-title">${property.title || "No Title"}</h5>
+            <p class="card-text">
+                <strong>Type:</strong> ${property.type}<br>
+                <strong>Purpose:</strong> ${property.purpose}<br>
+                <strong>Price:</strong> ${property.price}<br>
+                <strong>Location:</strong> ${property.city}, ${
+              property.state
+            }<br>
+                <strong>Posted by:</strong> ${property.name}
+            </p>
+        </div>
+    </div>
+  </a>
+`;
+
+            container.appendChild(card);
+          });
+        })
+        .catch((err) => {
+          console.error("Failed to fetch properties:", err);
+        });
+    </script>
+  </body>
+</html>
