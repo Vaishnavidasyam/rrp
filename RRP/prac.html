@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Platform</title>
+    <link rel="stylesheet" href="styles.css"> <!-- External CSS -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap" async defer></script>
+</head>
+<body>
+    <header>
+        <h1>Real Estate Platform</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#properties">Properties</a></li>
+                <li><a href="#agents">Agents</a></li>
+                <li><a href="#login">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- User Accounts -->
+    <section id="user-accounts">
+        <h2>User Accounts</h2>
+        <div class="account-types">
+            <div class="account-type">
+                <h3>Buyers</h3>
+                <p>Browse and save properties.</p>
+                <button>Sign Up</button>
+            </div>
+            <div class="account-type">
+                <h3>Sellers</h3>
+                <p>List your property.</p>
+                <button>Sign Up</button>
+            </div>
+            <div class="account-type">
+                <h3>Agents</h3>
+                <p>Manage listings.</p>
+                <button>Sign Up</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Search & Filters -->
+    <section id="search-filters">
+        <h2>Search & Filters</h2>
+        <form>
+            <input type="text" placeholder="Enter location">
+            <input type="number" placeholder="Min Price">
+            <input type="number" placeholder="Max Price">
+            <select>
+                <option>House</option>
+                <option>Apartment</option>
+                <option>Condo</option>
+            </select>
+            <button>Search</button>
+        </form>
+    </section>
+
+    <!-- Property Details -->
+    <section id="property-details">
+        <h2>Property Details</h2>
+        <div class="property">
+            <img src="property.jpg" alt="Property Image">
+            <h3>Luxury House</h3>
+            <p>4-bedroom house with modern amenities.</p>
+            <p>Price: $500,000</p>
+            <button>Add to Favorites</button>
+            <button>Contact Agent</button>
+        </div>
+    </section>
+
+    <!-- Favorites & Saved Listings -->
+    <section id="favorites">
+        <h2>Your Favorites</h2>
+        <div class="saved-listing">
+            <img src="saved-property.jpg" alt="Saved Property">
+            <p>Luxury Apartment</p>
+            <button>Remove</button>
+        </div>
+    </section>
+
+    <!-- Contact Agent -->
+    <section id="contact-agent">
+        <h2>Contact Agent</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" required></textarea>
+            <button>Send Message</button>
+        </form>
+    </section>
+
+    <!-- Google Maps Integration -->
+    <section id="google-maps">
+        <h2>Property Location</h2>
+        <div id="map" style="height: 400px; width: 100%;"></div>
+    </section>
+
+    <!-- Admin Dashboard -->
+    <section id="admin-dashboard">
+        <h2>Admin Dashboard</h2>
+        <button>Add Property</button>
+        <button>Edit Property</button>
+        <button>Delete Property</button>
+        <button>Manage Users</button>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Real Estate Platform. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function initMap() {
+            const location = { lat: 40.73061, lng: -73.935242 };
+            const map = new google.maps.Map(document.getElementById("map"), { zoom: 14, center: location });
+            new google.maps.Marker({ position: location, map: map });
+        }
+    </script>
+</body>
+</html>
